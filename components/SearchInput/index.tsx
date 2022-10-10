@@ -1,12 +1,14 @@
-import { useState } from 'react'
-import styles from './styles.module.css'
+import { useState } from 'react';
+import { useAppContext } from '../../contexts/AppContext';
+import styles from './styles.module.css';
 
 type Props = {
-    mainColor: string;
     onSearch: (searchValue:string) => void;
 }
 
-export const SearchInput = ({ mainColor, onSearch }: Props) => {
+export const SearchInput = ({ onSearch }: Props) => {
+    const { tenant } = useAppContext();
+
     const [focused, setFocused] = useState(false);
     const [searchValue, setSearchValue] = useState('');
 
@@ -19,13 +21,12 @@ export const SearchInput = ({ mainColor, onSearch }: Props) => {
     return(
         <div 
             className={styles.container} 
-            style={{ borderColor: focused ? mainColor : '#FFFFFF'}}
+            style={{ borderColor: focused ? tenant?.mainColor : '#FFFFFF'}}
         >
             <div 
             className={styles.button}
             onClick={()=> onSearch(searchValue)}
             >
-
             </div>
             <input 
                 placeholder='Digite o nome do produto'
