@@ -50,7 +50,6 @@ const Home = (data: Props) => {
                 </div>
             </header>
             <Banner/>
-
             <div className={styles.grid}>
                 <ProductItem
                     data={{ id:1 , image: '/tmp/burguer.png', categoryName:' Tradicional', name: 'Texas Burger', price:' R$ 25,50'}}
@@ -67,6 +66,10 @@ const Home = (data: Props) => {
                 
                 <ProductItem
                     data={{  id:5 ,image: '/tmp/burguer.png', categoryName:'Tradicional', name: 'Texas Burger', price:' R$ 25,50'}}
+                />
+
+                <ProductItem
+                    data={{  id:6 ,image: '/tmp/burguer.png', categoryName:'Tradicional', name: 'Texas Burger', price:' R$ 25,50'}}
                 />
             </div>
         </div>
