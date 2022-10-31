@@ -8,10 +8,10 @@ import { Header } from '../../components/Header';
 import { InputField } from '../../components/InputField';
 import { useAppContext } from '../../contexts/AppContext';
 import { useApi } from '../../libs/useApi';
-import styles from '../../styles/Login.module.css'
+import styles from '../../styles/SignUp.module.css'
 import { Tenant } from '../../types/Tenant';
 
-const Login = (data: Props) => {
+const SignUp = (data: Props) => {
     const { tenant, setTenant} = useAppContext();
 
 useEffect(()=>{
@@ -21,6 +21,7 @@ useEffect(()=>{
 
     const router = useRouter ();
 
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -36,12 +37,12 @@ useEffect(()=>{
     return (
         <div className={styles.container}>
             <Head>
-                <title>Login | {data.tenant.name}</title>
+                <title>Cadastro | {data.tenant.name}</title>
             </Head>
 
             <Header
             color={data.tenant.mainColor}
-            backHref={`/${data.tenant.slug}`} 
+            backHref={`/${data.tenant.slug}/login`} 
             />
             
             <div className={styles.header}>
@@ -50,10 +51,19 @@ useEffect(()=>{
             <div 
                 className={styles.subtitle}
                 style={{borderBottomColor: data.tenant.mainColor}}
-            >Use suas credenciais para realizar o login.
+            >Preencha os campos para criar o seu cadastro
             </div>
             <div className={styles.line}></div>
             <div className={styles.formArea}>
+            <div className={styles.inputArea}>
+                    <InputField
+                        color={data.tenant.mainColor}
+                        placeholder="Digite seu nome"
+                        value={name}
+                        onChange={setName}
+                    />
+                </div>
+
                 <div className={styles.inputArea}>
                     <InputField
                         color={data.tenant.mainColor}
@@ -76,34 +86,23 @@ useEffect(()=>{
                 <div className={styles.inputArea}>
                     <Button
                         color= {data.tenant.mainColor}
-                        label="Entrar"
+                        label="Cadastrar"
                         onClick={handleSubmit}
                         fill
                     />
                 </div>
             </div>
 
-            <div 
-                className={styles.forgetArea}
-                style={{borderBottomColor: data.tenant.mainColor}}
-                >
-                Esqueceu sua senha? <Link href={`/${data.tenant.slug}/forget`}><a style={{color : data.tenant.mainColor}}>Clique aqui</a></Link>
+            <div className={styles.forgetArea}>
+                Já tem cadastro? <Link href={`/${data.tenant.slug}/login`}><a style={{color : data.tenant.mainColor}}>Fazer Login</a></Link>
             </div>
-            <div className={styles.line}></div>
-            <div className={styles.signupArea}>
-                <Button
-                    color= {data.tenant.mainColor}
-                    label="Quero me cadastrar"
-                    onClick={handleSignUp}
-                    
-                />
-            </div>
+            
 
         </div>
     );
 }
 
-export default Login;
+export default SignUp;
 
 type Props = {
     tenant: Tenant
@@ -111,10 +110,10 @@ type Props = {
 
 export const getServerSideProps: GetServerSideProps = async (context) =>{
     const { tenant : tenantSlug } = context.query;
-    const api = useApi(tenantSlug as string);
+    const api = useApi();
 
     // Get Tenant
-    const tenant = await api.getTenant();
+    const tenant = await api.getTenant(tenantSlug as string);
     if (!tenant) {
         return{
             redirect: {
