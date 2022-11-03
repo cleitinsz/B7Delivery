@@ -7,9 +7,10 @@ type Props ={
     color:string;
     title?:string;
     subtitle?:string;
+    invert?: boolean;
 }
 
-export const Header = ({ backHref, color, title, subtitle }: Props) => {
+export const Header = ({ backHref, color, title, subtitle, invert }: Props) => {
     return(
         <div className={styles.container}>
             <div className={styles.leftSide}>
@@ -20,7 +21,7 @@ export const Header = ({ backHref, color, title, subtitle }: Props) => {
             </div>
             <div className={styles.centerSide}>
                 {title &&
-                <div className={styles.title}>
+                <div className={styles.title} style={{color: invert? '#FFF' : '#1b1b1b'}}>
                     {title}
                 </div>
                 }
@@ -31,7 +32,7 @@ export const Header = ({ backHref, color, title, subtitle }: Props) => {
                 }
             </div>
             <div className={styles.rightSide}>
-                ...
+                
             </div>
         </div>
     );
