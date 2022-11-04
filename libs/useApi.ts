@@ -36,6 +36,14 @@ export const useApi = (tenantSlug: string) => ({
                     secondColor: "#FF0000"
                 }
                 break;
+            case 'b7esfiha':
+                return {
+                    slug: 'b7esfiha',
+                    name: 'B7Esfiha',                 
+                    mainColor: '#00F',
+                    secondColor: "#00F"
+                }
+                break;
             default: return false;
         }
         
